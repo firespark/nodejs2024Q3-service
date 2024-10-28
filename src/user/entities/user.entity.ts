@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Exclude } from 'class-transformer';
-import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 interface IUser {
     id: string; // uuid v4
@@ -12,7 +12,7 @@ interface IUser {
 }
 
 export class User implements IUser {
-    @IsString()
+    @IsUUID(4,{each:true})
     @IsNotEmpty()
     id: string;
 

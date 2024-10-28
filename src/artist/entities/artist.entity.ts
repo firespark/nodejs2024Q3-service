@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 interface IArtist {
@@ -8,7 +8,7 @@ interface IArtist {
 }
 
 export class Artist implements IArtist {
-    @IsString()
+    @IsUUID(4,{each:true})
     @IsNotEmpty()
     id: string;
 

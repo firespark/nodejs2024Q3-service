@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Put, Param, Delete, HttpCode, ClassSeriali
 import { UsersService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UUIDvalidate } from 'src/UUID.validator';
 
 @UseInterceptors(ClassSerializerInterceptor)
 
@@ -23,19 +24,19 @@ export class UsersController {
 
   @Get(':id')
   @HttpCode(200)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', UUIDvalidate) id: string) {
     return this.usersService.findOne(id);
   }
 
   @Put(':id')
   @HttpCode(200)
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id', UUIDvalidate) id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', UUIDvalidate) id: string) {
     return this.usersService.remove(id);
   }
 }

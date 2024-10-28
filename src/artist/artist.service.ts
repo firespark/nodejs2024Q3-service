@@ -8,9 +8,6 @@ import { validate } from 'uuid';
 @Injectable()
 export class ArtistService {
   create(createArtistDto: CreateArtistDto) {
-    if (!createArtistDto.name || createArtistDto.grammy == undefined || createArtistDto.grammy == null) {
-      throw new BadRequestException();
-    }
     const artist = new Artist(createArtistDto.name, createArtistDto.grammy);
     artists.push(artist);
     return artist;
@@ -21,9 +18,6 @@ export class ArtistService {
   }
 
   findOne(id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException();
-    }
     const artist = artists.find(artist => artist.id === id);
     if (!artist) {
       throw new NotFoundException();
@@ -32,12 +26,6 @@ export class ArtistService {
   }
 
   update(id: string, updateArtistDto: UpdateArtistDto) {
-    if (!validate(id)) {
-      throw new BadRequestException();
-    }
-    if (updateArtistDto.name == undefined || updateArtistDto.name == null || updateArtistDto.grammy == undefined || updateArtistDto.grammy == null) {
-      throw new BadRequestException();
-    }
     const artist = artists.find(artist => artist.id === id);
     if (!artist) {
       throw new NotFoundException();
@@ -54,9 +42,6 @@ export class ArtistService {
   }
 
   remove(id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException();
-    }
     const index = artists.findIndex((artist) => artist.id === id);
     if (index == -1) {
       throw new NotFoundException();

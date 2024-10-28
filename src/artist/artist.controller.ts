@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Put } from
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
+import { UUIDvalidate } from 'src/UUID.validator';
 
 @Controller('artist')
 export class ArtistController {
@@ -21,19 +22,19 @@ export class ArtistController {
 
   @Get(':id')
   @HttpCode(200)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', UUIDvalidate) id: string) {
     return this.artistService.findOne(id);
   }
 
   @Put(':id')
   @HttpCode(200)
-  update(@Param('id') id: string, @Body() updateArtistDto: UpdateArtistDto) {
+  update(@Param('id', UUIDvalidate) id: string, @Body() updateArtistDto: UpdateArtistDto) {
     return this.artistService.update(id, updateArtistDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', UUIDvalidate) id: string) {
     return this.artistService.remove(id);
   }
 }
