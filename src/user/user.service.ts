@@ -49,6 +49,6 @@ export class UsersService {
     }
     users.splice(index, 1);
 
-    return this.findAll();
+    return users;
   }
 }

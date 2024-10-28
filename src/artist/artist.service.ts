@@ -48,6 +48,6 @@ export class ArtistService {
     }
     artists.splice(index, 1);
 
-    return this.findAll();
+    return artists;
   }
 }
