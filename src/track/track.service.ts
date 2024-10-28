@@ -39,7 +39,6 @@ export class TrackService {
       throw new NotFoundException();
     }
     tracks.splice(index, 1);
-
     return tracks;
   }
 }

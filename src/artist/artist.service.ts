@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './entities/artist.entity';
-import { artists } from 'src/db/db';
+import { artists, tracks, albums } from 'src/db/db';
 import { validate } from 'uuid';
 
 @Injectable()
@@ -47,6 +47,16 @@ export class ArtistService {
       throw new NotFoundException();
     }
     artists.splice(index, 1);
+
+    const authorTracks = tracks.filter((track) => track.artistId = id)
+    authorTracks.forEach(track => {
+      track.artistId = null;
+    });
+
+    const authorAlbums = albums.filter((album) => album.artistId = id)
+    authorAlbums.forEach(album => {
+      album.artistId = null;
+    });
 
     return artists;
   }

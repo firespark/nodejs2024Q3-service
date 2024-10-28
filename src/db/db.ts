@@ -1,9 +1,10 @@
+import { Album } from "src/album/entities/album.entity";
 import { Artist } from "src/artist/entities/artist.entity";
 import { Track } from "src/track/entities/track.entity";
 import { User } from "src/user/entities/user.entity";
 
 export const tracks: Track[] = [];
-//export const albums: Album[] = [];
+export const albums: Album[] = [];
 export const artists: Artist[] = [];
 export const users: User[] = [
     /*     {
