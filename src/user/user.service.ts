@@ -1,7 +1,8 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { users, User } from 'src/db/users';
+import { User } from './entities/user.entity';
+import { users } from 'src/db/db';
 import { validate } from 'uuid';
 
 @Injectable()
@@ -12,29 +13,12 @@ export class UsersService {
     }
     const user = new User(createUserDto.login, createUserDto.password);
     users.push(user);
-    return {
-      id: user.id,
-      login: user.login,
-      version: user.version,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    return user;
   }
 
   findAll() {
-    const allUsers = [];
-    users.forEach(user => {
-      allUsers.push(
-        {
-          id: user.id,
-          login: user.login,
-          version: user.version,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        }
-      );
-    });
-    return allUsers;
+
+    return users;
   }
 
   findOne(id: string) {
@@ -45,13 +29,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException();
     }
-    return {
-      id: user.id,
-      login: user.login,
-      version: user.version,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    return user;
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
@@ -74,13 +52,7 @@ export class UsersService {
     user.updatedAt = Date.now();
     user.version++;
 
-    return {
-      id: user.id,
-      login: user.login,
-      version: user.version,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    return user;
   }
 
   remove(id: string) {
