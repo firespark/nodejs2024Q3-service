@@ -58,6 +58,9 @@ export class UsersService {
     if (!validate(id)) {
       throw new BadRequestException();
     }
+    if (!updateUserDto.oldPassword || !updateUserDto.newPassword) {
+      throw new BadRequestException();
+    }
     const user = users.find(user => user.id === id);
     if (!user) {
       throw new NotFoundException();
