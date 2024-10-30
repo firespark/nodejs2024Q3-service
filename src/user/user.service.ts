@@ -1,9 +1,12 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { users } from 'src/db/db';
-
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,7 @@ export class UsersService {
   }
 
   findOne(id: string) {
-    const user = users.find(user => user.id === id);
+    const user = users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -26,7 +29,7 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    const user = users.find(user => user.id === id);
+    const user = users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException();
     }

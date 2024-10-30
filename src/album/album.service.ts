@@ -1,13 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { albums, tracks } from 'src/db/db';
+import { albums, favorites, tracks } from 'src/db/db';
 import { Album } from './entities/album.entity';
 
 @Injectable()
 export class AlbumService {
   create(createAlbumDto: CreateAlbumDto) {
-    const album = new Album(createAlbumDto.name, createAlbumDto.year, createAlbumDto.artistId);
+    const album = new Album(
+      createAlbumDto.name,
+      createAlbumDto.year,
+      createAlbumDto.artistId,
+    );
     albums.push(album);
     return album;
   }
@@ -17,7 +21,7 @@ export class AlbumService {
   }
 
   findOne(id: string) {
-    const album = albums.find(album => album.id === id);
+    const album = albums.find((album) => album.id === id);
     if (!album) {
       throw new NotFoundException();
     }
@@ -25,11 +29,11 @@ export class AlbumService {
   }
 
   update(id: string, updateAlbumDto: UpdateAlbumDto) {
-    const album = albums.find(album => album.id === id);
+    const album = albums.find((album) => album.id === id);
     if (!album) {
       throw new NotFoundException();
     }
-    return Object.assign(album, updateAlbumDto);;
+    return Object.assign(album, updateAlbumDto);
   }
 
   remove(id: string) {
@@ -39,10 +43,13 @@ export class AlbumService {
     }
     albums.splice(index, 1);
 
-    const albumTracks = tracks.filter((track) => track.artistId = id)
-    albumTracks.forEach(track => {
+    const albumTracks = tracks.filter((track) => (track.artistId = id));
+    albumTracks.forEach((track) => {
       track.albumId = null;
     });
+
+    const favIndex = favorites.albums.findIndex((album) => album === id);
+    favorites.albums.splice(favIndex, 1);
     return albums;
   }
 }

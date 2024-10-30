@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Delete, HttpCode, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  Put,
+} from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
@@ -28,7 +37,10 @@ export class TrackController {
 
   @Put(':id')
   @HttpCode(200)
-  update(@Param('id', UUIDvalidate) id: string, @Body() updateTrackDto: UpdateTrackDto) {
+  update(
+    @Param('id', UUIDvalidate) id: string,
+    @Body() updateTrackDto: UpdateTrackDto,
+  ) {
     return this.trackService.update(id, updateTrackDto);
   }
 

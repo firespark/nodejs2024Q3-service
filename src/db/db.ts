@@ -1,13 +1,15 @@
-import { Album } from "src/album/entities/album.entity";
-import { Artist } from "src/artist/entities/artist.entity";
-import { Track } from "src/track/entities/track.entity";
-import { User } from "src/user/entities/user.entity";
+import { Album } from 'src/album/entities/album.entity';
+import { Artist } from 'src/artist/entities/artist.entity';
+import { Fav } from 'src/favs/entities/fav.entity';
+import { Track } from 'src/track/entities/track.entity';
+import { User } from 'src/user/entities/user.entity';
 
+export const favorites: Fav = new Fav();
 export const tracks: Track[] = [];
 export const albums: Album[] = [];
 export const artists: Artist[] = [];
 export const users: User[] = [
-    /*     {
+  /*     {
             "id": "b8e4bf86-3818-4cab-9279-917f1fb7ce53",
             "login": "pipipi",
             "password": "popopo",
@@ -23,4 +25,22 @@ export const users: User[] = [
             "createdAt": 1730121079558,
             "updatedAt": 1730121079558
         } */
-    ];
+];
+
+/*     const createAlbumDto = {
+        name: 'TEST_ALBUM',
+        year: 2022,
+        artistId: null,
+      };
+      
+      const createArtistDto = {
+        name: 'TEST_artist',
+        grammy: true,
+      };
+      
+      const createTrackDto = {
+        name: 'Test track',
+        duration: 335,
+        artistId: null,
+        albumId: null,
+      }; */

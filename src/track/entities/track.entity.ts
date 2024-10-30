@@ -1,9 +1,15 @@
-import { IsDefined, IsString, IsInt, ValidateIf, IsUUID } from 'class-validator';
+import {
+  IsDefined,
+  IsString,
+  IsInt,
+  ValidateIf,
+  IsUUID,
+} from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Track {
   @IsDefined()
-  @IsUUID(4,{each:true})
+  @IsUUID(4, { each: true })
   id: string;
 
   @IsDefined()
@@ -22,7 +28,12 @@ export class Track {
   @IsInt()
   duration: number;
 
-  constructor(name: string, duration: number, artistId: string | null = null, albumId: string | null = null) {
+  constructor(
+    name: string,
+    duration: number,
+    artistId: string | null = null,
+    albumId: string | null = null,
+  ) {
     this.id = uuidv4();
     this.name = name;
     this.duration = duration;
