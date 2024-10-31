@@ -8,14 +8,21 @@ services:
       - db
     env_file:
       - .env
+    working_dir: /app
     ports:
       - ${PORT}:${PORT}
     networks:
       - homelib-network
+    volumes:
+      - type: bind
+        source: ./static
+        target: /opt/app/static
     restart: always
 
   db:
-    image: postgres:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile-db
     container_name: homelib-db
     env_file:
       - .env
