@@ -1,71 +1,66 @@
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "version" INTEGER NOT NULL,
-    "createAt" INTEGER NOT NULL,
-    "updateAt" INTEGER NOT NULL,
+    "version" SERIAL NOT NULL,
+    "createdAt" BIGINT NOT NULL,
+    "updatedAt" BIGINT NOT NULL,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Artist" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "grammy" BOOLEAN NOT NULL,
-
-    CONSTRAINT "Artist_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Album" (
+CREATE TABLE "albums" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "artistId" TEXT,
-    "userId" TEXT,
 
-    CONSTRAINT "Album_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "albums_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Track" (
+CREATE TABLE "artists" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "duration" INTEGER NOT NULL,
-    "artistId" TEXT,
-    "albumId" TEXT,
-    "userId" TEXT,
+    "grammy" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Track_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "artists_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Favorites" (
-    "artists" TEXT[],
-    "albums" TEXT[],
-    "tracks" TEXT[]
+CREATE TABLE "tracks" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "artistId" TEXT,
+    "albumId" TEXT,
+    "duration" INTEGER NOT NULL,
+
+    CONSTRAINT "tracks_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "User_login_key" ON "User"("login");
+-- CreateTable
+CREATE TABLE "fav_albums" (
+    "id" SERIAL NOT NULL,
+    "albumId" TEXT NOT NULL,
 
--- CreateIndex
-CREATE UNIQUE INDEX "Favorites_artists_albums_tracks_key" ON "Favorites"("artists", "albums", "tracks");
+    CONSTRAINT "fav_albums_pkey" PRIMARY KEY ("id")
+);
 
--- AddForeignKey
-ALTER TABLE "Album" ADD CONSTRAINT "Album_artistId_fkey" FOREIGN KEY ("artistId") REFERENCES "Artist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE "fav_artists" (
+    "id" SERIAL NOT NULL,
+    "artistId" TEXT NOT NULL,
 
--- AddForeignKey
-ALTER TABLE "Album" ADD CONSTRAINT "Album_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    CONSTRAINT "fav_artists_pkey" PRIMARY KEY ("id")
+);
 
--- AddForeignKey
-ALTER TABLE "Track" ADD CONSTRAINT "Track_artistId_fkey" FOREIGN KEY ("artistId") REFERENCES "Artist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE "fav_tracks" (
+    "id" SERIAL NOT NULL,
+    "trackId" TEXT NOT NULL,
 
--- AddForeignKey
-ALTER TABLE "Track" ADD CONSTRAINT "Track_albumId_fkey" FOREIGN KEY ("albumId") REFERENCES "Album"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    CONSTRAINT "fav_tracks_pkey" PRIMARY KEY ("id")
+);
 
--- AddForeignKey
-ALTER TABLE "Track" ADD CONSTRAINT "Track_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

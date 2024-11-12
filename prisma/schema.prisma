@@ -1,62 +1,80 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        String   @id @default(uuid())
   login     String   @unique
   password  String
-  version   Int
-  createAt  Int
-  updateAt  Int
+  version   Int      @default(autoincrement())
+  createdAt BigInt 
+  updatedAt BigInt 
 
-  albums    Album[]  @relation("UserAlbums") // Связь с альбомами (один пользователь может иметь несколько альбомов)
-  tracks    Track[]  @relation("UserTracks") // Связь с треками (один пользователь может иметь несколько треков)
-}
-
-model Artist {
-  id      String   @id @default(uuid())
-  name    String
-  grammy  Boolean
-
-  albums  Album[]
-  tracks  Track[]
+  @@map("users")
 }
 
 model Album {
-  id       String   @id @default(uuid())
-  name     String
-  year     Int
-  artistId String?
-  userId   String?   // ID пользователя
+  id        String          @id @default(uuid())
+  name      String
+  year      Int
+  artistId  String?
+  artist    Artist?         @relation(fields: [artistId], references: [id])
+  tracks    Track[]
+  favourite FavouriteAlbum?
 
-  artist   Artist?   @relation(fields: [artistId], references: [id])
-  user     User?     @relation(fields: [userId], references: [id], name: "UserAlbums")
-  tracks   Track[]
+  @@map("albums")
+}
+
+model Artist {
+  id     String  @id @default(uuid())
+  name   String
+  grammy Boolean @default(false)
+  albums Album[]
+  tracks Track[]
+  favourite FavouriteArtist?
+
+  @@map("artists")
 }
 
 model Track {
-  id       String   @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  duration Int
   artistId String?
+  artist   Artist? @relation(fields: [artistId], references: [id])
   albumId  String?
-  userId   String?   // ID пользователя
+  album    Album?  @relation(fields: [albumId], references: [id])
+  duration Int
+  favourite FavouriteTrack?
 
-  artist   Artist?   @relation(fields: [artistId], references: [id])
-  album    Album?    @relation(fields: [albumId], references: [id])
-  user     User?     @relation(fields: [userId], references: [id], name: "UserTracks")
+  @@map("tracks")
 }
 
-model Favorites {
-  artists  String[] // Массив ID артистов
-  albums   String[] // Массив ID альбомов
-  tracks   String[] // Массив ID треков
+model FavouriteAlbum {
+  id      Int    @id @default(autoincrement())
+  albumId String @unique
+  album   Album @relation(fields: [albumId], references: [id])
 
-  @@unique([artists, albums, tracks]) // Составной уникальный ключ для уникальности записи
+  @@map("fav_albums")
+}
+
+model FavouriteArtist {
+  id       Int    @id @default(autoincrement())
+  artistId String @unique
+  artist   Artist @relation(fields: [artistId], references: [id])
+
+  @@map("fav_artists")
+}
+
+model FavouriteTrack {
+  id      Int    @id @default(autoincrement())
+  trackId String @unique
+  track   Track @relation(fields: [trackId], references: [id])
+
+  @@map("fav_tracks")
 }

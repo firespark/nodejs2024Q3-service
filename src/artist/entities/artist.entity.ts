@@ -2,7 +2,7 @@ import { IsBoolean, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { v4 as uuidv4 } from 'uuid';
 
 interface IArtist {
-  id: string; // uuid v4
+  id: string;
   name: string;
   grammy: boolean;
 }
