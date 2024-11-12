@@ -3,12 +3,12 @@ import { Exclude } from 'class-transformer';
 import { IsInt, IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 interface IUser {
-  id: string; 
+  id: string;
   login: string;
   password: string;
-  version: number; 
-  createdAt: number; 
-  updatedAt: number; 
+  version: number;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export class User implements IUser {

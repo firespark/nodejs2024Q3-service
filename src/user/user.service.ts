@@ -9,22 +9,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
-  
+  constructor(private prisma: PrismaService) {}
+
   async create(createUserDto: CreateUserDto) {
-    const existingUser = await this.prisma.user.findUnique({
-      where: { login: createUserDto.login },
-    });
-
-    
-
     const newUser = await this.prisma.user.create({
       data: {
         login: createUserDto.login,
         password: createUserDto.password,
         version: 1,
-        createdAt: Date.now(), 
-        updatedAt: Date.now(), 
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       },
     });
 
@@ -65,7 +59,7 @@ export class UsersService {
       where: { id },
       data: {
         password: updateUserDto.newPassword,
-        updatedAt: Date.now(), 
+        updatedAt: Date.now(),
         version: user.version + 1,
       },
     });
@@ -77,15 +71,15 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
-  
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
-  
+
     await this.prisma.user.delete({
       where: { id },
     });
-  
+
     return { message: 'User deleted successfully' };
   }
 }
