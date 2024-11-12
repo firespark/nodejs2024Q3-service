@@ -8,9 +8,9 @@
 ## Downloading repository and change branch
 
 ```
-git clone https://github.com/andb106/nodejs2023Q2-service.git
+git clone https://github.com/fireleit/nodejs2023Q2-service.git
 
-git checkout develop-part2
+git checkout dev-2
 ```
 
 ## Installing NPM modules
@@ -37,6 +37,13 @@ docker compose up
 The app starts on port (4000 as default)
 To change port use .env file
 Available endpoints description: https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/rest-service/assignment.md
+
+
+## Vulnerabilities scanning
+
+```
+npm run audit
+```
 
 
 ## Testing
